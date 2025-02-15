@@ -1,10 +1,25 @@
-import { Shuffle } from "lucide-react";
+import { Eye, EyeOff, Shuffle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
+import { useState } from "react";
 
 const AddCredentials = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const generateRandomPassword = () => {
+    const characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()+-*/_=";
+    let randomPassword = "";
+    for (let i = 0; i < 16; i++) {
+      randomPassword += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+    document.querySelector("#password").value = randomPassword;
+  };
+
   return (
     <div className="grid gap-10">
       <div>
@@ -13,14 +28,27 @@ const AddCredentials = () => {
         <div className="h-5"></div>
         <Label>Password:</Label>
         <div className="relative flex">
-          <Input type="password" className="pr-12" />
+          <Input
+            type={!isVisible && "password"}
+            className="pr-12"
+            id="password"
+          />
+          <button
+            onClick={() => setIsVisible(!isVisible)}
+            className="absolute top-1.5 right-12 text-gray-700"
+          >
+            {isVisible ? <Eye /> : <EyeOff />}
+          </button>
           <HoverCard>
             <HoverCardTrigger>
-              <button>
-                <Shuffle className="absolute top-1.5 right-3 text-gray-700" />
+              <button
+                onClick={generateRandomPassword}
+                className="absolute top-1.5 right-3 text-gray-700"
+              >
+                <Shuffle />
               </button>
             </HoverCardTrigger>
-            <HoverCardContent className="py-1 text-center w-auto bg-[aliceblue]">
+            <HoverCardContent className="py-1 text-sm text-center w-auto bg-[aliceblue]">
               Random Password
             </HoverCardContent>
           </HoverCard>
