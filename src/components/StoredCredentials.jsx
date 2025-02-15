@@ -3,7 +3,7 @@
 const StoredCredentials = () => {
   return (
     <div>
-
+Store
     </div>
   )
 }
