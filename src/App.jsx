@@ -5,6 +5,7 @@ import StoredCredentials from "./components/StoredCredentials";
 function App() {
   const [isAdd, setIsAdd] = useState(true);
   const [isStore, setIsStore] = useState(false);
+  const [credentials, setCredentials] = useState([]);
 
   return (
     <div className="min-h-screen bg-blue-300 flex justify-center items-center">
@@ -34,8 +35,8 @@ function App() {
           </button>
         </div>
         <div className="mt-5">
-          {isAdd && <AddCredentials />}
-          {isStore && <StoredCredentials />}
+          {isAdd && <AddCredentials credentials={credentials} setCredentials={setCredentials} />}
+          {isStore && <StoredCredentials credentials={credentials} setCredentials={setCredentials} />}
         </div>
       </div>
     </div>

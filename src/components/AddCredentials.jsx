@@ -5,8 +5,11 @@ import { Label } from "./ui/label";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { useState } from "react";
 
-const AddCredentials = () => {
+const AddCredentials = ({ credentials, setCredentials }) => {
   const [isVisible, setIsVisible] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [note, setNote] = useState("");
 
   const generateRandomPassword = () => {
     const characters =
@@ -17,21 +20,35 @@ const AddCredentials = () => {
         Math.floor(Math.random() * characters.length)
       );
     }
-    document.querySelector("#password").value = randomPassword;
+    setPassword(randomPassword);
+  };
+
+  const handleAddCredential = () => {
+    const newCredential = { username, password, note };
+    setCredentials([...credentials, newCredential]);
+    setUsername("");
+    setPassword("");
+    setNote("");
   };
 
   return (
     <div className="grid gap-10">
       <div>
         <Label>Username:</Label>
-        <Input type="email" placeholder="sample@pwarden.com" />
+        <Input
+          type="email"
+          placeholder="sample@pwarden.com"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
         <div className="h-5"></div>
         <Label>Password:</Label>
         <div className="relative flex">
           <Input
             type={!isVisible && "password"}
             className="pr-12"
-            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
           />
           <button
             onClick={() => setIsVisible(!isVisible)}
@@ -58,9 +75,14 @@ const AddCredentials = () => {
         <textarea
           className="w-full h-36 py-1 px-2 rounded-md bg-[aliceblue] border shadow-sm resize-none focus:outline outline-1"
           placeholder="Add a note..."
+          value={note}
+          onChange={(e) => setNote(e.target.value)}
         ></textarea>
       </div>
-      <Button className="bg-blue-600 hover:bg-blue-700">
+      <Button
+        className="bg-blue-600 hover:bg-blue-700"
+        onClick={handleAddCredential}
+      >
         Add to Stored Credential
       </Button>
     </div>
