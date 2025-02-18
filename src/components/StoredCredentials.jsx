@@ -1,13 +1,21 @@
 import { Delete, Eye, EyeOff } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const StoredCredentials = ({ credentials, setCredentials }) => {
   const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const data = localStorage.getItem("credentials");
+    if (data) {
+      setCredentials(JSON.parse(data));
+    }
+  }, []);
 
   const handleDelete = (index) => {
     const newCredentials = credentials.slice();
     newCredentials.splice(index, 1);
     setCredentials(newCredentials);
+    localStorage.setItem("credentials", JSON.stringify(newCredentials));
   };
 
   return (

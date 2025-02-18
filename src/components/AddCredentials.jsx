@@ -29,6 +29,10 @@ const AddCredentials = ({ credentials, setCredentials }) => {
     setUsername("");
     setPassword("");
     setNote("");
+    localStorage.setItem(
+      "credentials",
+      JSON.stringify([...credentials, newCredential])
+    );
   };
 
   return (
