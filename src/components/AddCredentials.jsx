@@ -4,6 +4,7 @@ import { Input } from "./ui/input";
 import { Label } from "./ui/label";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/hover-card";
 import { useState } from "react";
+import { toast } from "sonner";
 
 const AddCredentials = ({ credentials, setCredentials }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -24,6 +25,10 @@ const AddCredentials = ({ credentials, setCredentials }) => {
   };
 
   const handleAddCredential = () => {
+    if (!username.trim() || !password.trim()) {
+      toast.error("Username and password cannot be empty.");
+      return;
+    }
     const newCredential = { username, password, note };
     setCredentials([...credentials, newCredential]);
     setUsername("");
@@ -33,10 +38,11 @@ const AddCredentials = ({ credentials, setCredentials }) => {
       "credentials",
       JSON.stringify([...credentials, newCredential])
     );
+    toast.success(`Added credentials for ${username || "(no username)"}`);
   };
 
   return (
-    <div className="grid gap-10">
+    <div className="grid gap-10 h-[50vh]">
       <div>
         <Label>Username:</Label>
         <Input

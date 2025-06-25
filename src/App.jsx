@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddCredentials from "./components/AddCredentials";
 import StoredCredentials from "./components/StoredCredentials";
+import { Toaster } from "./components/ui/sonner";
 
 function App() {
   const [isAdd, setIsAdd] = useState(true);
@@ -9,6 +10,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-blue-300 flex justify-center items-center">
+      <Toaster richColors />
       <div className="bg-[aliceblue] py-5 px-10 rounded-lg shadow-lg m-3">
         <div className="flex gap-20 text-lg font-semibold">
           <button
@@ -35,8 +37,18 @@ function App() {
           </button>
         </div>
         <div className="mt-5">
-          {isAdd && <AddCredentials credentials={credentials} setCredentials={setCredentials} />}
-          {isStore && <StoredCredentials credentials={credentials} setCredentials={setCredentials} />}
+          {isAdd && (
+            <AddCredentials
+              credentials={credentials}
+              setCredentials={setCredentials}
+            />
+          )}
+          {isStore && (
+            <StoredCredentials
+              credentials={credentials}
+              setCredentials={setCredentials}
+            />
+          )}
         </div>
       </div>
     </div>
